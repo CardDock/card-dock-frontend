@@ -11,6 +11,8 @@
 
 # Visual Studio Code
 .vscode/vscode-edge-debug
+/.vscode/.vscode-chrome-profile
+/.vscode/.vscode-edge-profile
 
 # Miscellaneous
 /.angular/cache
@@ -22,3 +24,4 @@
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
