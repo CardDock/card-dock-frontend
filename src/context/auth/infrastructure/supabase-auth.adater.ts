@@ -1,0 +1,54 @@
+import { Injectable } from '@angular/core';
+import { AuthPort } from '../domain/port/auth.port';
+import { AuthUser } from '../domain/user/user.entity';
+import { createClient, SupabaseClient, AuthResponse } from '@supabase/supabase-js';
+import { EnvService } from 'src/env/env.service';
+import { InvalidCredentialsAuthError } from '../domain/errors/auth.error';
+import { TokenManager } from './token-manager';
+
+@Injectable()
+export class SupabaseAuthAdapter implements AuthPort {
+	private supabase: SupabaseClient;
+
+	constructor(
+		private environment: EnvService,
+		private tokenManager: TokenManager,
+	) {
+		this.supabase = createClient(this.environment.getSupabaseUrl(), this.environment.getSupabaseAnonKey(), {
+			auth: {
+				persistSession: true,
+				autoRefreshToken: false,
+				detectSessionInUrl: true,
+			},
+		});
+		this.tokenManager.setupTokenRefresh(this.supabase);
+	}
+
+	async login(email: string, password: string): Promise<AuthUser> {
+		const { data, error } = await this.supabase.auth.signInWithPassword({
+			email,
+			password,
+		});
+
+		if (error) {
+			throw new InvalidCredentialsAuthError();
+		}
+
+		return this.toAuthUser({ data, error });
+	}
+
+	private toAuthUser({ data, error }: AuthResponse): AuthUser {
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		if (!data?.user?.email) {
+			throw new Error('Usuario no válido');
+		}
+
+		return {
+			id: data.user.id,
+			email: data.user.email,
+		} as AuthUser;
+	}
+}
