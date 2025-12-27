@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LoginUseCase } from '../login.use-case';
 import { AuthUser } from '../../domain/user/user.entity';
 import { AuthStatePort } from '../../domain/port/auth-state.port';
+import { LogoutUseCase } from '../logout.use-case';
 
 @Injectable()
 export class AuthFacade {
@@ -11,6 +12,7 @@ export class AuthFacade {
 
 	constructor(
 		private readonly loginUseCase: LoginUseCase,
+		private readonly logoutUseCase: LogoutUseCase,
 		private readonly authStatePort: AuthStatePort,
 	) {}
 
@@ -26,8 +28,8 @@ export class AuthFacade {
 	}
 
 	async logout(): Promise<void> {
-		// Llamar al caso de uso de logout si existe
+		await this.logoutUseCase.execute();
 
-		this.authStatePort.clearUser(); // Eliminar usuario del estado
+		this.authStatePort.clearUser();
 	}
 }

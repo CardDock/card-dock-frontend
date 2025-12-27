@@ -37,6 +37,14 @@ export class SupabaseAuthAdapter implements AuthPort {
 		return this.toAuthUser({ data, error });
 	}
 
+	async logout(): Promise<void> {
+		const { error } = await this.supabase.auth.signOut();
+
+		if (error) {
+			throw new Error('Error during logout: ' + error.message);
+		}
+	}
+
 	private toAuthUser({ data, error }: AuthResponse): AuthUser {
 		if (error) {
 			throw new Error(error.message);

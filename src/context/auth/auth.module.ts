@@ -8,10 +8,13 @@ import { NgxsAuthStateAdapter } from './infrastructure/state/ngxs-auth-state.ada
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './presentation/components/login/login.component';
 import { TokenManager } from './infrastructure/token-manager';
+import { LogoutUseCase } from './application/logout.use-case';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @NgModule({
 	providers: [
 		LoginUseCase,
+		LogoutUseCase,
 		AuthFacade,
 		{
 			provide: AuthPort,
@@ -23,7 +26,7 @@ import { TokenManager } from './infrastructure/token-manager';
 		},
 		TokenManager,
 	],
-	imports: [FormsModule],
+	imports: [FormsModule, CommonModule, AsyncPipe],
 	declarations: [LoginComponent],
 	exports: [LoginComponent],
 })
