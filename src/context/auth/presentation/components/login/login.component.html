@@ -1,7 +1,16 @@
 login
 
+<p></p>
 <input type="text" name="username" id="username" placeholder="Username" [(ngModel)]="username" />
 
+<p></p>
 <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password" />
 
+<p></p>
 <button (click)="onMakeLogin()">Login</button>
+
+<p></p>
+
+@if (isAuthenticated$ | async) {
+	<button (click)="onMakeLogout()">Logout</button>
+}

@@ -8,6 +8,7 @@ import { AuthFacade } from 'src/context/auth/application/facades/auth.facade';
 	standalone: false,
 })
 export class LoginComponent {
+	isAuthenticated$ = this.authFacade.isAuthenticated$;
 	username = model('');
 	password = model('');
 
@@ -15,6 +16,10 @@ export class LoginComponent {
 
 	onMakeLogin(): void {
 		this.login();
+	}
+
+	onMakeLogout(): void {
+		this.logout();
 	}
 
 	private async login() {
@@ -26,5 +31,9 @@ export class LoginComponent {
 			console.error(error.message);
 			return;
 		}
+	}
+
+	private async logout() {
+		this.authFacade.logout();
 	}
 }
