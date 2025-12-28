@@ -10,11 +10,13 @@ import { LoginComponent } from './presentation/components/login/login.component'
 import { TokenManager } from './infrastructure/token-manager';
 import { LogoutUseCase } from './application/logout.use-case';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { InitializeAuthUseCase } from './application/initialize-auth.use-case';
 
 @NgModule({
 	providers: [
 		LoginUseCase,
 		LogoutUseCase,
+		InitializeAuthUseCase,
 		AuthFacade,
 		{
 			provide: AuthPort,
