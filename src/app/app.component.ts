@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthFacade } from 'src/context/auth/application/facades/auth.facade';
 import { AuthModule } from 'src/context/auth/auth.module';
 
 @Component({
@@ -8,6 +9,10 @@ import { AuthModule } from 'src/context/auth/auth.module';
 	imports: [RouterOutlet, AuthModule],
 	templateUrl: './app.component.html',
 })
-export class AppComponent {
-	title = 'angular-dev-enhanced';
+export class AppComponent implements OnInit {
+	constructor(private readonly authFacade: AuthFacade) {}
+
+	ngOnInit() {
+		this.authFacade.initialize();
+	}
 }

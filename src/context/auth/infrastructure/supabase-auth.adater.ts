@@ -24,6 +24,19 @@ export class SupabaseAuthAdapter implements AuthPort {
 		this.tokenManager.setupTokenRefresh(this.supabase);
 	}
 
+	async getCurrentSession(): Promise<AuthUser | null> {
+		const { data, error } = await this.supabase.auth.getSession();
+
+		if (!data?.session?.user?.email || !data?.session?.user?.id) {
+			return null;
+		}
+
+		return {
+			id: data.session.user.id,
+			email: data.session.user.email,
+		} as AuthUser;
+	}
+
 	async login(email: string, password: string): Promise<AuthUser> {
 		const { data, error } = await this.supabase.auth.signInWithPassword({
 			email,
