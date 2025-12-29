@@ -4,6 +4,7 @@ import { AuthUser } from '../../domain/user/user.entity';
 import { AuthStatePort } from '../../domain/port/auth-state.port';
 import { LogoutUseCase } from '../logout.use-case';
 import { InitializeAuthUseCase } from '../initialize-auth.use-case';
+import { CreateUserUseCase } from '../create-user.use-case';
 
 @Injectable()
 export class AuthFacade {
@@ -16,6 +17,7 @@ export class AuthFacade {
 		private readonly logoutUseCase: LogoutUseCase,
 		private readonly authStatePort: AuthStatePort,
 		private readonly initializeAuthUseCase: InitializeAuthUseCase,
+		private readonly createUserUseCase: CreateUserUseCase,
 	) {}
 
 	async login(email: string, password: string): Promise<AuthUser> {
@@ -33,6 +35,15 @@ export class AuthFacade {
 		await this.logoutUseCase.execute();
 
 		this.authStatePort.clearUser();
+	}
+
+	async singUp(email: string, password: string): Promise<void> {
+		const result = await this.createUserUseCase.execute(email, password);
+
+		if (result) {
+			const user = result;
+			this.authStatePort.setUser(user);
+		}
 	}
 
 	async initialize(): Promise<void> {
