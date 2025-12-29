@@ -11,12 +11,14 @@ import { TokenManager } from './infrastructure/token-manager';
 import { LogoutUseCase } from './application/logout.use-case';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { InitializeAuthUseCase } from './application/initialize-auth.use-case';
+import { CreateUserUseCase } from './application/create-user.use-case';
 
 @NgModule({
 	providers: [
 		LoginUseCase,
 		LogoutUseCase,
 		InitializeAuthUseCase,
+		CreateUserUseCase,
 		AuthFacade,
 		{
 			provide: AuthPort,

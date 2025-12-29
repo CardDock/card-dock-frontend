@@ -8,9 +8,9 @@ login
 
 <p></p>
 <button (click)="onMakeLogin()">Login</button>
-
-<p></p>
+<button (click)="onMakeSingUp()">Sing Up</button>
 
 @if (isAuthenticated$ | async) {
+	<p></p>
 	<button (click)="onMakeLogout()">Logout</button>
 }

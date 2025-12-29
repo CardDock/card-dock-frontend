@@ -24,8 +24,32 @@ export class SupabaseAuthAdapter implements AuthPort {
 		this.tokenManager.setupTokenRefresh(this.supabase);
 	}
 
+	async singUp(email: string, password: string): Promise<AuthUser> {
+		const { data, error } = await this.supabase.auth.signUp({
+			email,
+			password,
+		});
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		if (!data.user?.email && !data.user?.id) {
+			throw new Error('Usuario no válido');
+		}
+
+		return {
+			id: data.user!.id,
+			email: data.user!.email!,
+		};
+	}
+
 	async getCurrentSession(): Promise<AuthUser | null> {
 		const { data, error } = await this.supabase.auth.getSession();
+
+		if (error) {
+			throw new Error(error.message);
+		}
 
 		if (!data?.session?.user?.email || !data?.session?.user?.id) {
 			return null;

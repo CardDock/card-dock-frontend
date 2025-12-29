@@ -18,6 +18,10 @@ export class LoginComponent {
 		this.login();
 	}
 
+	onMakeSingUp(): void {
+		this.singUp();
+	}
+
 	onMakeLogout(): void {
 		this.logout();
 	}
@@ -35,5 +39,9 @@ export class LoginComponent {
 
 	private async logout() {
 		this.authFacade.logout();
+	}
+
+	private async singUp() {
+		await this.authFacade.singUp(this.username(), this.password());
 	}
 }
