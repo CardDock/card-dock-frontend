@@ -24,6 +24,25 @@ export class SupabaseAuthAdapter implements AuthPort {
 		this.tokenManager.setupTokenRefresh(this.supabase);
 	}
 
+	async updatePassword(newPassword: string): Promise<void> {
+		const { error } = await this.supabase.auth.updateUser({ password: newPassword });
+
+		if (error) throw error;
+	}
+
+	async verifyCurrentPassword(currentPassword: string): Promise<boolean> {
+		const { error } = await this.supabase.auth.signInWithPassword({
+			email: (await this.getCurrentSession())?.email || '',
+			password: currentPassword,
+		});
+
+		if (error) {
+			throw new Error(error.message);
+		}
+
+		return true;
+	}
+
 	async singUp(email: string, password: string): Promise<AuthUser> {
 		const { data, error } = await this.supabase.auth.signUp({
 			email,
