@@ -12,6 +12,7 @@ import { LogoutUseCase } from './application/logout.use-case';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { InitializeAuthUseCase } from './application/initialize-auth.use-case';
 import { CreateUserUseCase } from './application/create-user.use-case';
+import { UpdatePasswordUseCase } from './application/update-password.use-case';
 
 @NgModule({
 	providers: [
@@ -19,6 +20,7 @@ import { CreateUserUseCase } from './application/create-user.use-case';
 		LogoutUseCase,
 		InitializeAuthUseCase,
 		CreateUserUseCase,
+		UpdatePasswordUseCase,
 		AuthFacade,
 		{
 			provide: AuthPort,

@@ -5,6 +5,7 @@ import { AuthStatePort } from '../../domain/port/auth-state.port';
 import { LogoutUseCase } from '../logout.use-case';
 import { InitializeAuthUseCase } from '../initialize-auth.use-case';
 import { CreateUserUseCase } from '../create-user.use-case';
+import { UpdatePasswordUseCase } from '../update-password.use-case';
 
 @Injectable()
 export class AuthFacade {
@@ -18,7 +19,12 @@ export class AuthFacade {
 		private readonly authStatePort: AuthStatePort,
 		private readonly initializeAuthUseCase: InitializeAuthUseCase,
 		private readonly createUserUseCase: CreateUserUseCase,
+		private readonly updatePasswordUseCase: UpdatePasswordUseCase,
 	) {}
+
+	async updatePassword(currentPassword: string, newPassword: string): Promise<void> {
+		await this.updatePasswordUseCase.execute(currentPassword, newPassword);
+	}
 
 	async login(email: string, password: string): Promise<AuthUser> {
 		const result = await this.loginUseCase.execute(email, password);
