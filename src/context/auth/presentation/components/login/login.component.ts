@@ -9,8 +9,13 @@ import { AuthFacade } from 'src/context/auth/application/facades/auth.facade';
 })
 export class LoginComponent {
 	isAuthenticated$ = this.authFacade.isAuthenticated$;
+	user$ = this.authFacade.user$;
+
 	username = model('');
 	password = model('');
+
+	currentPassword = model('');
+	newPassword = model('');
 
 	constructor(private authFacade: AuthFacade) {}
 
@@ -24,6 +29,21 @@ export class LoginComponent {
 
 	onMakeLogout(): void {
 		this.logout();
+	}
+
+	onMakeUpdatePassword(): void {
+		this.updatePassword();
+	}
+
+	private async updatePassword() {
+		try {
+			await this.authFacade.updatePassword(this.currentPassword(), this.newPassword());
+
+			console.log('Password updated successfully');
+		} catch (error: AuthError | any) {
+			console.error(error.message);
+			return;
+		}
 	}
 
 	private async login() {
