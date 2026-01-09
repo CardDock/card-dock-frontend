@@ -10,6 +10,12 @@ login
 <button (click)="onMakeLogin()">Login</button>
 <button (click)="onMakeSingUp()">Sing Up</button>
 
+<p></p>
+<button (click)="onMakeRequestPasswordReset()">Request Password Reset</button>
+
+<p></p>
+<button (click)="onMakeUpdatePassword()">New Password</button>
+
 @if (isAuthenticated$ | async) {
 	<p>
 		{{ (user$ | async)?.email }}

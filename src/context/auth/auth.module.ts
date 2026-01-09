@@ -13,6 +13,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { InitializeAuthUseCase } from './application/initialize-auth.use-case';
 import { CreateUserUseCase } from './application/create-user.use-case';
 import { UpdatePasswordUseCase } from './application/update-password.use-case';
+import { RequestPasswordResetUseCase } from './application/request-password-reset.use-case';
 
 @NgModule({
 	providers: [
@@ -21,6 +22,7 @@ import { UpdatePasswordUseCase } from './application/update-password.use-case';
 		InitializeAuthUseCase,
 		CreateUserUseCase,
 		UpdatePasswordUseCase,
+		RequestPasswordResetUseCase,
 		AuthFacade,
 		{
 			provide: AuthPort,

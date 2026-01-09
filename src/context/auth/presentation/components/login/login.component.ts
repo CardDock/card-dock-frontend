@@ -35,6 +35,19 @@ export class LoginComponent {
 		this.updatePassword();
 	}
 
+	onMakeRequestPasswordReset(): void {
+		this.requestPasswordReset();
+	}
+
+	private async requestPasswordReset() {
+		try {
+			await this.authFacade.requestPasswordReset(this.username());
+		} catch (error: AuthError | any) {
+			console.error(error.message);
+			return;
+		}
+	}
+
 	private async updatePassword() {
 		try {
 			await this.authFacade.updatePassword(this.currentPassword(), this.newPassword());
