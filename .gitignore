@@ -19,6 +19,7 @@
 /coverage
 /.coverage
 /tests/coverage
+/.jest-cache
 
 # test files
 /test-results/
