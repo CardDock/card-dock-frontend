@@ -7,4 +7,5 @@ export abstract class AuthPort {
 	abstract singUp(email: string, password: string): Promise<AuthUser>;
 	abstract updatePassword(newPassword: string): Promise<void>;
 	abstract verifyCurrentPassword(currentPassword: string): Promise<boolean>;
+	abstract requestPasswordReset(email: string): Promise<void>;
 }
